@@ -7,7 +7,11 @@ if [ -z "$1" ]; then
 fi
 
 # Se obtiene la media de consumo de la ciudad especificada
-media=$(awk -v ciudad="$1" '$1 == ciudad { sum += $4; count++ } END { print int(sum/count) }' consumos.txt)
+media=$(./cmedia.sh $1 | awk '{print $NF}')
 
-# Se muestra la media de consumo en la pantalla
-echo $media
+# Se comprueba la calificación eco de la ciudad
+if [ $media -lt 400 ]; then
+    echo "La ciudad de $1 tiene una calificación ECO"
+else
+    echo "La ciudad de $1 tiene una calificación NO ECO"
+fi
